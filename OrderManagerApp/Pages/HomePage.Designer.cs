@@ -123,10 +123,18 @@ partial class HomePage
             AutoSize = true
         };
         updateTotalOrdersButton.Click += UpdateTotalOrdersButton_Clicked;
+
         totalOrdersBox = new()
         {
             Name = "totalOrdersBox",
             Location = new Point(20,400),
+            Text = "",
+            AutoSize = true
+        };
+        totalClosedOrderBox = new()
+        {
+            Name = "totalClosedOrderBox",
+            Location = new Point(20, 430),
             Text = "",
             AutoSize = true
         };
@@ -161,11 +169,13 @@ partial class HomePage
         Controls.Add(deleteButton);
         Controls.Add(quitButton);
 
+        Controls.Add(totalOrdersBox);
+        Controls.Add(totalClosedOrderBox);
+
         Controls.Add(openGridView);
         Controls.Add(closedGridView);
 
         Controls.Add(updateTotalOrdersButton);
-        Controls.Add(totalOrdersBox);
     }
 
 
@@ -187,4 +197,5 @@ partial class HomePage
 
     Button updateTotalOrdersButton;
     Label totalOrdersBox;
+    Label totalClosedOrderBox;
 }

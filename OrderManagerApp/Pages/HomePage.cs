@@ -277,8 +277,12 @@ public partial class HomePage : Form
 
     private void QuitButton_Clicked(object sender, EventArgs e) => Environment.Exit(0);
 
-    private void UpdateTotalOrdersButton_Clicked(object? sender, EventArgs? e) =>
+    private void UpdateTotalOrdersButton_Clicked(object? sender, EventArgs? e)
+    {
         totalOrdersBox.Text = $"Number of Orders: {openOrders.Count}";
+        totalClosedOrderBox.Text = $"Number of Closed Orders: {closedOrders.Count}";
+
+    }
 
     private void DisplayOneOpenOrder(Order foundOrder)
     {
