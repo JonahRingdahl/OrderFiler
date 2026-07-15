@@ -145,7 +145,7 @@ public partial class HomePage : Form
     {
         using var ctx = new OrderContext();
         var builder = new StringBuilder();
-        await foreach (var order in OrderContext.GetOpenOrdersAsync(ctx))
+        await foreach (var order in OrderContext.PrintingOrders(ctx))
             builder.Append(order.DisplayOrder());
 
         printData = builder.ToString();
