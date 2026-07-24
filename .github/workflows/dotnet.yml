@@ -62,12 +62,14 @@ jobs:
     
     - name: Check if release exists
       id: check_release
+      shell: pwsh
       run: |
-        if gh release view v${{ steps.get_version.outputs.version }} 2>/dev/null; then
+        $exists = gh release view v${{ steps.get_version.outputs.version }} 2>&1
+        if ($LASTEXITCODE -eq 0) {
           echo "exists=true" >> $env:GITHUB_OUTPUT
-        else
+        } else {
           echo "exists=false" >> $env:GITHUB_OUTPUT
-        fi
+        }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       continue-on-error: true
