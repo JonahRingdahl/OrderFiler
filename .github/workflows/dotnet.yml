@@ -40,4 +40,4 @@ jobs:
       run: dotnet test OrderManager.slnx --configuration Release --no-build --verbosity normal
 
     - name: Publish Artifiact
-      run: dotnet publish -c Release -r win-x64 -p:SelfContained=true
+      run: dotnet publish -c Release -r win-x64 -p:SelfContained=true -p:PublishTrimmed=true -p:IncludeAllContentForSelfExtract=true
