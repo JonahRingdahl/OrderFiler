@@ -52,6 +52,11 @@ jobs:
     - name: Publish Artifiact
       run: dotnet publish -c Release -r win-x64 -p:SelfContained=true -p:IncludeAllContentForSelfExtract=true
 
+    - name: List published files
+      shell: pwsh
+      run: |
+        Get-ChildItem -Path "./bin/Release/net10.0-windows/win-x64/publish/" -Recurse | Select-Object -Property FullName
+
     - name: Get version from csproj
       id: get_version
       shell: pwsh
@@ -59,23 +64,8 @@ jobs:
         [xml]$csproj = Get-Content OrderManagerApp/OrderManagerApp.csproj
         $version = $csproj.Project.PropertyGroup.Version
         echo "version=$version" >> $env:GITHUB_OUTPUT
-    
-    - name: Check if release exists
-      id: check_release
-      shell: pwsh
-      run: |
-        $exists = gh release view v${{ steps.get_version.outputs.version }} 2>&1
-        if ($LASTEXITCODE -eq 0) {
-          echo "exists=true" >> $env:GITHUB_OUTPUT
-        } else {
-          echo "exists=false" >> $env:GITHUB_OUTPUT
-        }
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      continue-on-error: true
-    
+
     - name: Create Release
-      if: steps.check_release.outputs.exists == 'false'
       uses: softprops/action-gh-release@v1
       with:
         files: ./bin/Release/net10.0-windows/win-x64/publish/**/*
