@@ -53,24 +53,11 @@ jobs:
       working-directory: OrderManagerApp
       run: dotnet publish -c Release -r win-x64 -p:SelfContained=true -p:IncludeAllContentForSelfExtract=true
 
-    - name: List published files
-      shell: pwsh
-      run: |
-        Get-ChildItem -Path "./OrderManagerApp/bin/Release/net10.0-windows/win-x64/publish/" -Recurse | Select-Object -Property FullName
-
-    - name: Get version from csproj
-      id: get_version
-      shell: pwsh
-      run: |
-        [xml]$csproj = Get-Content OrderManagerApp/OrderManagerApp.csproj
-        $version = $csproj.Project.PropertyGroup.Version
-        echo "version=$version" >> $env:GITHUB_OUTPUT
-
     - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/v')
       uses: softprops/action-gh-release@v1
       with:
-        files: ./OrderManagerApp/bin/Release/net10.0-windows/win-x64/publish/**/*
-        tag_name: v${{ steps.get_version.outputs.version }}
+        files: ./OrderManagerApp/bin/Release/net10.0-windows/win-x64/publish/OrderManager.exe
         draft: false
         prerelease: false
       env:
