@@ -29,9 +29,19 @@ jobs:
     #   shell: pwsh
     #   run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
 
-    - name: Apply EF Core migrations
-      working-directory: OrderManagerApp\
-      run: dotnet ef database update
+    # - name: Apply EF Core migrations
+    #   working-directory: OrderManagerApp\
+    #   run: dotnet ef database update
+
+    # - name: Create database directory
+    #   run: mkdir "$env:APPDATA\OrderManager"
+    #   shell: pwsh
+        
+    # - name: Apply EF Core migrations
+    #   working-directory: OrderManagerApp\
+    #   env:
+    #     ORDERDB_PATH: ${{ runner.temp }}/orders.db
+    #   run: dotnet ef database update
 
     - name: Build solution
       run: dotnet build OrderManager.slnx --configuration Release --no-restore
