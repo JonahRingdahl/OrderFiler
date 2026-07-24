@@ -12,6 +12,7 @@ static class Program
     [STAThread]
     static void Main()
     {
+
         using (var db = new OrderContext())
         {
             db.Database.Migrate(); 

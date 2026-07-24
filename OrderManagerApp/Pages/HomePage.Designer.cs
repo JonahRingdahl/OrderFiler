@@ -139,12 +139,11 @@ partial class HomePage
             AutoSize = true
         };
 
-
         openGridView = new()
         {
             Name = "orderGridView",
             Location = new Point(200, 10),
-            Size = new Size(GRID_WIDTH, GRID_HEIGHT)
+            Size = new Size(GRID_WIDTH, GRID_HEIGHT),
         };
         openGridView.SelectionChanged += OpenGridView_SelectionChanged;
 
@@ -152,7 +151,7 @@ partial class HomePage
         {
             Name = "closedGridView",
             Location = new Point(200 + GRID_WIDTH + 50, 10),
-            Size = new Size(GRID_WIDTH, GRID_HEIGHT)
+            Size = new Size(GRID_WIDTH, GRID_HEIGHT),
         };
         closedGridView.SelectionChanged += ClosedGridView_SelectionChanged;
 
