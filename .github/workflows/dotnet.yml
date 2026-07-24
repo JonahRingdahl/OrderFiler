@@ -49,13 +49,14 @@ jobs:
     - name: Run tests
       run: dotnet test OrderManager.slnx --configuration Release --no-build --verbosity normal
 
-    - name: Publish Artifiact
+    - name: Publish Artifact
+      working-directory: OrderManagerApp
       run: dotnet publish -c Release -r win-x64 -p:SelfContained=true -p:IncludeAllContentForSelfExtract=true
 
     - name: List published files
       shell: pwsh
       run: |
-        Get-ChildItem -Path "./bin/Release/net10.0-windows/win-x64/publish/" -Recurse | Select-Object -Property FullName
+        Get-ChildItem -Path "./OrderManagerApp/bin/Release/net10.0-windows/win-x64/publish/" -Recurse | Select-Object -Property FullName
 
     - name: Get version from csproj
       id: get_version
@@ -68,7 +69,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ./bin/Release/net10.0-windows/win-x64/publish/**/*
+        files: ./OrderManagerApp/bin/Release/net10.0-windows/win-x64/publish/**/*
         tag_name: v${{ steps.get_version.outputs.version }}
         draft: false
         prerelease: false
