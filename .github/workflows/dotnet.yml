@@ -30,7 +30,7 @@ jobs:
     #   run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
 
     - name: Apply EF Core migrations
-      working-directory: OrderMangerApp\
+      working-directory: OrderManagerApp\
       run: dotnet ef database update
 
     - name: Build solution
