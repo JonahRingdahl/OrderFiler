@@ -1,0 +1,53 @@
+name: .NET Build & Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: "10.x"
+
+    - name: Restore dependencies
+      run: dotnet restore OrderManager.slnx
+
+    - name: Install dotnet-ef
+      run: dotnet tool install dotnet-ef
+
+    # - name: Add dotnet tools to PATH
+    #   shell: pwsh
+    #   run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
+
+    # - name: Apply EF Core migrations
+    #   working-directory: OrderManagerApp\
+    #   run: dotnet ef database update
+
+    # - name: Create database directory
+    #   run: mkdir "$env:APPDATA\OrderManager"
+    #   shell: pwsh
+        
+    # - name: Apply EF Core migrations
+    #   working-directory: OrderManagerApp\
+    #   env:
+    #     ORDERDB_PATH: ${{ runner.temp }}/orders.db
+    #   run: dotnet ef database update
+
+    - name: Build solution
+      run: dotnet build OrderManager.slnx --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test OrderManager.slnx --configuration Release --no-build --verbosity normal
+
+    - name: Publish Artifiact
+      run: dotnet publish -c Release -r win-x64 -p:SelfContained=true -p:PublishTrimmed=true -p:IncludeAllContentForSelfExtract=true
