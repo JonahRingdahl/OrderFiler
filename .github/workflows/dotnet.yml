@@ -25,9 +25,9 @@ jobs:
     - name: Install dotnet-ef
       run: dotnet tool install dotnet-ef
 
-    - name: Add dotnet tools to PATH
-      shell: pwsh
-      run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
+    # - name: Add dotnet tools to PATH
+    #   shell: pwsh
+    #   run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
 
     - name: Apply EF Core migrations
       working-directory: OrderMangerApp\
